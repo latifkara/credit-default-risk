@@ -1,0 +1,33 @@
+# customer-sat default configuration. Every key is optional; omitted keys use these defaults.
+data:
+  path: data/application_train.csv   # CSV or Parquet; override with --data
+  target: TARGET
+  id_columns: [SK_ID_CURR]
+  test_size: 0.2
+  random_state: 42
+
+features:
+  cat_threshold: 10          # numeric columns with fewer uniques are treated as categorical
+  high_card_threshold: 20    # categorical columns with more uniques are ordinal-encoded (not one-hot)
+  max_missing_ratio: 0.30    # columns with a higher share of NaN are dropped (learned on train only)
+  numeric_imputer: median    # median | knn (knn is slow on large data)
+  clip_outliers: true
+  iqr_factor: 1.5
+  top_k_features: 50         # model-based selection inside the pipeline; null disables it
+
+train:
+  voting: soft               # soft | hard
+  balance_classes: true      # class weights / scale_pos_weight for imbalanced targets
+  threshold: 0.5
+  cv_folds: 0                # >1 enables stratified CV (ROC-AUC) on the train split
+  models:
+    dt:       { enabled: true, params: { max_depth: 6 } }
+    rf:       { enabled: true, params: { n_estimators: 300, n_jobs: -1 } }
+    xgboost:  { enabled: true, params: { n_estimators: 300, learning_rate: 0.05, max_depth: 5 } }
+    lightgbm: { enabled: true, params: { n_estimators: 400, learning_rate: 0.05 } }
+
+output:
+  dir: artifacts
+  experiment_name: customer-sat
+  use_mlflow: false
+  save_plots: true

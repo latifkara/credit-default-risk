@@ -1,0 +1,38 @@
+# Data & artifacts
+data/
+artifacts/
+mlruns/
+*.csv
+*.joblib
+*.pkl
+
+# ZenML / MLflow local state
+.zen/
+zenml_env/
+*.db
+mlflow.db
+mlruns.db
+mlruns/
+namespace-*.yaml
+--*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Envs / IDE / OS
+.venv/
+venv/
+env/
+.env
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

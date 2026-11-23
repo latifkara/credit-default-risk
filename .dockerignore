@@ -1,0 +1,6 @@
+.git
+data
+artifacts
+mlruns
+__pycache__
+*.csv
